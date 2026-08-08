@@ -173,6 +173,12 @@
 
     function setTheme(theme, opts) {
         root.setAttribute('data-theme', theme);
+        /* Bootstrap keys some of its own component internals off this attribute
+         * rather than off a variable — the form-select caret is a data-URI SVG
+         * that switches on it. The Django apps need the two kept in step or a
+         * toggle flips the palette but leaves those stragglers behind. Harmless
+         * where there is no Bootstrap. */
+        root.setAttribute('data-bs-theme', theme);
         write(STORE_THEME, theme);
         reflectToggles();
         if (!opts || !opts.silent) { broadcast(); }

@@ -60,6 +60,7 @@ check('html lang', window.document.documentElement.getAttribute('lang'), 'sr-Cyr
 console.log('\n--- theme ---');
 window.KG.setTheme('dark');
 check('data-theme', window.document.documentElement.getAttribute('data-theme'), 'dark');
+check('data-bs-theme kept in step', window.document.documentElement.getAttribute('data-bs-theme'), 'dark');
 check('theme toggle aria', $('tbtn').getAttribute('aria-pressed'), 'true');
 check('persisted', window.localStorage.getItem('kg-theme'), 'dark');
 
