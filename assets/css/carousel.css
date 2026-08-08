@@ -1,0 +1,113 @@
+/* Homepage carousel.
+ *
+ * Lifted out of an inline <style> block in partials/carousel.hbs so it goes
+ * through the build like everything else. The slides are photographs, so the
+ * controls and caption read from the fixed --on-dark pair rather than the
+ * theme tokens — they sit on an image in both light and dark mode. */
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 5em;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+}
+
+.slide {
+    position: relative;
+    display: block;
+    min-width: 100%;
+    height: 100%;
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 65%;
+    left: 40%;
+    z-index: 2;
+    padding: 0 1em;
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 5vw, 7rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--on-dark);
+    text-align: left;
+    text-wrap: balance;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    padding: 0.5em 0.8em;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--on-dark);
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-btn:focus-visible {
+    outline: 2px solid var(--on-dark);
+    outline-offset: 2px;
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+.carousel-dots {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: var(--accent);
+}
+
+.dot:focus-visible {
+    outline: 2px solid var(--on-dark);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+        transition: none;
+    }
+}

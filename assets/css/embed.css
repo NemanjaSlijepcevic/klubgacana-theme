@@ -1,0 +1,41 @@
+/* Styling for the embedded Bibliography app.
+ *
+ * Recovered from the hand-edited assets/built/screen.css. The Bibliography
+ * Django app is embedded in an iframe on the /bibliografija/ page, and these
+ * ids (#tabela, #pretrazivac) belong to markup that page injects around it.
+ *
+ * Phase 4 moves this responsibility into the Django app itself, where the
+ * markup actually lives. Kept here verbatim until then so nothing regresses. */
+
+#tabela {
+    border-collapse: collapse;
+}
+
+#tabela td,
+#tabela th {
+    max-width: 300px;
+    border: 1px solid var(--rule);
+    padding: 8px;
+}
+
+#tabela tr:nth-child(even) {
+    background-color: var(--surface-sunk);
+}
+
+#tabela tr:hover {
+    background-color: var(--accent-soft);
+}
+
+#tabela th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+#pretrazivac {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 8px;
+}

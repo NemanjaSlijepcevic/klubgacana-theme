@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+
+# Generated key material — ignored globally by type, not by path, matching the
+# policy of the ansible_scripts repository this theme is maintained alongside.
+# Never rename a secret to an unlisted extension; that silently un-ignores it.
+*.pem
+*.pub
+*.key
+*.crt
+*.csr
+*.sqlite3
+*.sqlite
+*.db
+
+# NOTE: assets/built/ is deliberately NOT ignored. See README, "Built assets".

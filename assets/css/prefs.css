@@ -1,0 +1,107 @@
+/* Header preference controls: Ћир / Lat and dark mode.
+ *
+ * Both are plain buttons carrying data-kg-*-toggle; assets/js/site.js binds
+ * them by delegation, so the same markup works in the Django apps. */
+
+.kg-prefs {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.kg-prefs-btn {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 4px 9px;
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.kg-prefs-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.kg-prefs-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Which half of Ћир/Lat is lit tracks the current setting. */
+.kg-script-cyr {
+    color: var(--accent);
+}
+
+.kg-script-lat,
+.kg-script-sep {
+    color: var(--ink-faint);
+}
+
+:root[data-script="lat"] .kg-script-cyr {
+    color: var(--ink-faint);
+}
+
+:root[data-script="lat"] .kg-script-lat {
+    color: var(--accent);
+}
+
+/* Show the icon for the mode the button switches TO. */
+.kg-icon-sun {
+    display: none;
+}
+
+:root[data-theme="dark"] .kg-icon-moon {
+    display: none;
+}
+
+:root[data-theme="dark"] .kg-icon-sun {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .kg-icon-moon {
+        display: none;
+    }
+
+    :root:not([data-theme="light"]) .kg-icon-sun {
+        display: block;
+    }
+}
+
+/* An explicit light choice must beat the OS preference above. */
+:root[data-theme="light"] .kg-icon-moon {
+    display: block;
+}
+
+:root[data-theme="light"] .kg-icon-sun {
+    display: none;
+}
+
+/* The crest sits beside the wordmark; it is a printed emblem, so it keeps
+ * its own colours in both themes rather than being tinted. */
+.kg-crest {
+    width: 27px;
+    height: auto;
+    flex: none;
+}
+
+@media (max-width: 767px) {
+    .kg-prefs {
+        margin-right: 4px;
+    }
+
+    .kg-prefs-btn {
+        font-size: 1.3rem;
+    }
+}

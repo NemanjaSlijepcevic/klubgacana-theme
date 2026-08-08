@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="{{@site.locale}}">
+<html lang="sr-Cyrl" data-script="cyr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{meta_title}}</title>
+
+    {{!-- Stamp the visitor's stored preferences before the first paint.
+          Without this the page renders in the default theme for one frame
+          and then snaps to the chosen one. --}}
+    <script>
+        (function () {
+            try {
+                var d = document.documentElement;
+                var t = localStorage.getItem('kg-theme');
+                if (t === 'dark' || t === 'light') { d.setAttribute('data-theme', t); }
+                var s = localStorage.getItem('kg-script');
+                if (s === 'lat') {
+                    d.setAttribute('data-script', 'lat');
+                    d.setAttribute('lang', 'sr-Latn');
+                }
+            } catch (e) { }
+        }());
+    </script>
+
     <link rel="stylesheet" href="{{asset "built/screen.css"}}">
 
     {{ghost_head}}
@@ -13,110 +32,11 @@
 <body class="{{body_class}}{{{block "body_class"}}} is-head-{{#match @custom.navigation_layout "Logo on the left"}}left-logo{{else match @custom.navigation_layout "Logo in the middle"}}middle-logo{{else}}stacked{{/match}}{{#match @custom.title_font "=" "Elegant serif"}} has-serif-title{{/match}}{{#match @custom.body_font "=" "Elegant serif"}} has-serif-body{{/match}}{{#is "tag"}}{{#if tag.feature_image}} is-head-transparent{{/if}}{{/is}}{{#match @custom.header_style "Accent color"}} is-head-brand{{/match}}{{#match @custom.header_style "Dark"}} is-head-dark{{/match}}">
 <div class="gh-site">
 
-    <header id="gh-head" class="gh-head gh-outer">
-        <div class="gh-head-inner gh-inner">
-            <div class="gh-head-brand">
-                <div class="gh-head-brand-wrapper"><img src="https://klubgacana.com/cropped-grb-gacko.png" width="27" height="37"><p>&ensp;</p>
-                    {{#is "home"}}<h1 class="gh-head-logo">{{/is}}
-                    <a {{^is "home"}}class="gh-head-logo"{{/is}} href="{{@site.url}}">
-                        {{#if @site.logo}}
-                            <img src="{{@site.logo}}" alt="{{@site.title}}">
-                            {{#if @custom.white_publication_logo_for_transparent_header}}
-                                <img src="{{@custom.white_publication_logo_for_transparent_header}}" alt="{{@site.title}}">
-                            {{/if}}
-                        {{else}}
-                            {{@site.title}}
-                        {{/if}}
-                    </a>
-                    {{#is "home"}}</h1>{{/is}}
-                </div>
-                <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search>{{> "icons/search"}}</button>
-                <button class="gh-burger"></button>
-            </div>
-
-            <nav class="gh-head-menu">
-                <ul class="custom-menu">
-                    <li><a href="/">Почетна</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">О нама</a>
-                        <ul class="dropdown">
-                            <li><a href="/onama//">О клубу</a></li>
-                            <li><a href="/clanstvo/">Чланство</a></li>
-                            <li><a href="/kontakt/">Контакт</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="#">Наслеђе</a>
-                        <ul class="dropdown">
-                            <li><a href="/tag/gacani/">Гачани</a></li>
-                            <li><a href="/bibliografija/">Библиографија</a></li>
-                            <li><a href="/kaleidoskop/">Калеидоскоп</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/tag/dogadjaji/">Догађаји</a></li>
-                    <li><a href="/tag/humanizam/">Хуманизам</a></li>
-                </ul>
-                {{#unless @site.members_enabled}}
-                    {{#match @custom.navigation_layout "Stacked"}}
-                        <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search>{{> "icons/search"}}</button>
-                    {{/match}}
-                {{/unless}}
-            </nav>
-
-            <div class="gh-head-actions">
-                {{#unless @site.members_enabled}}
-                    {{^match @custom.navigation_layout "Stacked"}}
-                        <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search>{{> "icons/search"}}</button>
-                    {{/match}}
-                {{else}}
-                    <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search>{{> "icons/search"}}</button>
-                    <div class="gh-head-members">
-                        {{#unless @member}}
-                            {{#unless @site.members_invite_only}}
-                                <a class="gh-head-link" href="#/portal/signin" data-portal="signin">Улаз</a>
-                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signup" data-portal="signup">Пријава</a>
-                            {{else}}
-                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signin" data-portal="signin">Улаз</a>
-                            {{/unless}}
-                        {{else}}
-                            <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/account" data-portal="account">Налог</a>
-                        {{/unless}}
-                    </div>
-                {{/unless}}
-            </div>
-        </div>
-    </header>
+    {{> "header"}}
 
     {{{body}}}
 
-    <footer class="gh-foot gh-outer">
-        <div class="gh-foot-inner gh-inner">
-            {{!-- @site.members_enabled --}}
-            {{#if false}} 
-            {{#unless @member}}
-                <section class="gh-subscribe">
-                    <h4 class="gh-subscribe-title">Пријавите се на {{@site.title}}</h4>
-                    {{#if @custom.email_signup_text}}
-                        <div class="gh-subscribe-description">{{@custom.email_signup_text}}</div>
-                    {{/if}}
-                    <button class="gh-subscribe-btn gh-btn" data-portal="signup">{{> "icons/email"}} Пријавите се</button>
-                </section>
-            {{/unless}}
-            {{/if}}
-
-            <nav class="gh-foot-menu">
-                {{navigation type="secondary"}}
-            </nav>
-
-            <div class="gh-copyright">
-                {{#unless @custom.footer_text}}
-                    {{@site.title}} © {{date format="YYYY"}}. Powered by <a href="https://ghost.org/" target="_blank" rel="noopener">Ghost</a>
-                {{else}}
-                    {{@custom.footer_text}}
-                {{/unless}}
-            </div>
-        </div>
-    </footer>
+    {{> "footer"}}
 
 </div>
 
@@ -124,6 +44,9 @@
     {{> "pswp"}}
 {{/is}}
 
+{{!-- The preference runtime loads first and stands alone, so a failure
+     in the vendor bundle cannot disable the theme and script toggles. --}}
+<script src="{{asset "built/site.min.js"}}"></script>
 <script src="{{asset "built/main.min.js"}}"></script>
 
 {{ghost_foot}}

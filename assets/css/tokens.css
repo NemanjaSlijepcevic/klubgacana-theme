@@ -1,0 +1,146 @@
+/* ===========================================================================
+ * DESIGN TOKENS — klubgacana.com
+ *
+ * The palette is taken from the Gacko coat of arms: heraldic blue #324c8f,
+ * heraldic red #ca362c, brass #aa974c. Grounds are weathered limestone —
+ * cool grey-green rather than warm cream.
+ *
+ * Structure matters for dark mode. The viewer has THREE states, not two:
+ *   1. bare :root                      — the complete light palette
+ *   2. prefers-color-scheme: dark      — OS preference, guarded so an explicit
+ *                                        light choice still wins
+ *   3. :root[data-theme="dark"]        — the site toggle, wins over the OS
+ * Never give a colour its only definition inside 2 or 3, or the un-stamped
+ * default state renders one theme's text on the other theme's ground.
+ * ======================================================================== */
+
+:root {
+    /* --- grounds: weathered limestone ----------------------------------- */
+    --stone: #E9EBE6;
+    --surface: #F5F6F2;
+    --surface-sunk: #DFE2DC;
+
+    /* --- ink: carbon with a blue bias toward the accent ------------------ */
+    --ink: #151A24;
+    --ink-muted: #5A6472;
+    --ink-faint: #616A77;
+
+    /* --- from the crest -------------------------------------------------- */
+    --accent: #25407F;
+    --accent-soft: #E2E6F1;
+    --ember: #B8332A;
+    --brass: #7B6830;
+
+    /* --- incised rules --------------------------------------------------- */
+    --rule: #C6CBC2;
+    --rule-strong: #9BA298;
+
+    /* --- fixed pair, never flips ----------------------------------------
+     * For contexts that are dark in BOTH themes: text over a cover photo,
+     * the PhotoSwipe lightbox, the gradient on a featured card. */
+    --on-dark: #F5F6F2;
+    --on-dark-muted: #C3C8CF;
+    --on-accent: #F5F6F2;
+
+    /* --- type ------------------------------------------------------------ */
+    --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif; /* stylelint-disable-line value-keyword-case */
+    --font-serif: 'Lora', Georgia, Times, serif; /* stylelint-disable-line value-keyword-case */
+
+    /* ===================================================================
+     * Vendor bridge.
+     *
+     * @tryghost/shared-theme-assets styles everything through these nine
+     * variables. Re-pointing them at the semantic tokens above makes the
+     * whole vendor stylesheet (~42 KB) follow dark mode without forking a
+     * single vendor rule.
+     *
+     * The mapping inverts consistently: --color-white is the "light end"
+     * and --color-darker-gray the "dark end", so a rule pairing a dark
+     * background with light text stays a contrasting pair after the swap —
+     * it simply becomes light-on-dark instead of dark-on-light.
+     * =================================================================== */
+    --color-white: var(--surface);
+    --color-lighter-gray: var(--surface-sunk);
+    --color-light-gray: var(--rule);
+    --color-mid-gray: var(--rule-strong);
+    --color-dark-gray: var(--ink-muted);
+    --color-darker-gray: var(--ink);
+    --color-black: var(--ink);
+    --color-primary-text: var(--ink);
+    --color-secondary-text: var(--ink-muted);
+    --color-nice-gray: var(--stone);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --stone: #12151A;
+        --surface: #191D25;
+        --surface-sunk: #0C0F13;
+
+        --ink: #E4E6E1;
+        --ink-muted: #A2ABB8;
+        --ink-faint: #7B8592;
+
+        --accent: #8AA5E6;
+        --accent-soft: #1E2635;
+        --ember: #E8756A;
+        --brass: #C7AC62;
+
+        --rule: #2E353F;
+        --rule-strong: #454E5A;
+
+        --on-accent: #12151A;
+
+        /* Ghost injects --ghost-accent-color from the admin Design settings
+         * as a plain `:root {...}` rule. In light mode that choice flows
+         * through untouched. On this ground an admin-picked accent is very
+         * likely too dark to read, and CSS cannot lighten it in place (a
+         * variable cannot reference itself), so dark mode uses the designed
+         * accent instead. Both selectors here outrank Ghost's bare :root. */
+        --ghost-accent-color: var(--accent);
+    }
+}
+
+:root[data-theme="dark"] {
+    --stone: #12151A;
+    --surface: #191D25;
+    --surface-sunk: #0C0F13;
+
+    --ink: #E4E6E1;
+    --ink-muted: #A2ABB8;
+    --ink-faint: #7B8592;
+
+    --accent: #8AA5E6;
+    --accent-soft: #1E2635;
+    --ember: #E8756A;
+    --brass: #C7AC62;
+
+    --rule: #2E353F;
+    --rule-strong: #454E5A;
+
+    --on-accent: #12151A;
+
+    --ghost-accent-color: var(--accent);
+}
+
+/* ===========================================================================
+ * Always-dark contexts.
+ *
+ * PhotoSwipe is a black lightbox in both themes, so it must NOT follow the
+ * inversion above — it reads from the fixed --on-dark pair.
+ *
+ * The cover-image and featured-card overlays need the same treatment, but
+ * screen.css re-declares those selectors after this file and would win on
+ * source order; they are set to --on-dark there instead, so each rule has a
+ * single source of truth.
+ * ======================================================================== */
+
+.pswp__counter,
+.pswp__caption__center,
+.pswp__share-tooltip a {
+    color: var(--on-dark);
+}
+
+.pswp__caption__center {
+    background: transparent;
+}

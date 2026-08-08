@@ -1,14 +1,28 @@
+/* Import order is the cascade.
+ *
+ * The vendor sheet ships its own :root defaults, so tokens.css must come
+ * AFTER it to win — that single re-pointing is what makes the vendor's
+ * ~42 KB follow dark mode without forking any of its rules. */
 @import "@tryghost/shared-theme-assets/assets/css/v1/screen.css";
 @import "fonts.css";
+@import "tokens.css";
+@import "nav.css";
+@import "prefs.css";
+@import "carousel.css";
+@import "embed.css";
 
 :root {
-    --font-sans: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-    /* stylelint-disable-line value-keyword-case */
-    --font-serif: Lora, Georgia, Times, serif;
-    /* stylelint-disable-line value-keyword-case */
     --head-nav-gap: 32px;
-    --color-primary-text: var(--color-darker-gray);
     --h1-size: 4.4rem;
+}
+
+/* Page ground.
+ *
+ * The vendor stylesheet paints the body white. Tinting it limestone is what
+ * makes the .gh-topic / .gh-article panels below read as separate plates. */
+body {
+    background-color: var(--stone);
+    color: var(--ink);
 }
 
 .share-block {
@@ -215,7 +229,7 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 .gh-topic-grid .gh-card.featured.large .gh-card-title {
     font-size: 4.2rem;
     line-height: 1.2;
-    color: var(--color-white);
+    color: var(--on-dark);
 }
 
 .gh-topic-grid .gh-card.featured.large .gh-card-link:hover .gh-card-title {
@@ -261,7 +275,7 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 
 .gh-topic-grid .gh-card.featured.large .gh-card-footer {
     margin-top: 20px;
-    color: var(--color-white);
+    color: var(--on-dark);
 }
 
 .gh-card-footer>*+* {
@@ -558,12 +572,12 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 }
 
 .gh-cover-content .gh-article-tag {
-    color: var(--color-white);
+    color: var(--on-dark);
 }
 
 .gh-cover-title {
     font-size: 7.2rem;
-    color: var(--color-white);
+    color: var(--on-dark);
     text-transform: uppercase;
 }
 
@@ -579,7 +593,7 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 .gh-cover-description {
     margin-top: 20px;
     font-size: 1.9rem;
-    color: var(--color-white);
+    color: var(--on-dark);
 }
 
 .has-serif-body .gh-cover-description {
@@ -621,7 +635,7 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 
 .gh-subscribe-title {
     font-size: 4.4rem;
-    color: var(--color-white);
+    color: var(--ink);
     white-space: break-spaces;
 }
 
@@ -641,9 +655,9 @@ body:not(.home-template) .gh-topic-grid .gh-card {
 
 .gh-subscribe-btn {
     margin-top: 40px;
-    color: var(--color-darker-gray);
+    color: var(--on-accent);
     letter-spacing: -0.011em;
-    background-color: var(--color-white);
+    background-color: var(--accent);
 }
 
 .gh-subscribe-btn:hover {
@@ -660,13 +674,18 @@ body:not(.home-template) .gh-topic-grid .gh-card {
     padding-top: 80px;
     padding-bottom: 120px;
     margin-top: 120px;
-    background-color: var(--color-darker-gray);
+    background-color: transparent;
+    border-top: 4px double var(--rule-strong);
 }
 
 .gh-foot,
 .gh-foot a,
 .gh-foot a:hover {
-    color: var(--color-white);
+    color: var(--ink-muted);
+}
+
+.gh-foot a:hover {
+    color: var(--accent);
 }
 
 .gh-foot-inner {
@@ -680,12 +699,12 @@ body:not(.home-template) .gh-topic-grid .gh-card {
     width: 100%;
     padding-bottom: 32px;
     text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid var(--rule);
 }
 
 .gh-subscribe~.gh-foot-menu {
     padding: 16px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--rule);
 }
 
 .gh-foot-menu .nav {
@@ -901,3 +920,42 @@ body:not(.home-template) .gh-topic-grid .gh-card {
         line-height: 1;
     }
 }
+/* ---------------------------------------------------------------------------
+ * Recovered card + wide-layout customisations.
+ *
+ * These were hand-written straight into assets/built/screen.css (under a bare
+ * `/*NAS*​/` marker) and existed nowhere in source. They are the site's current
+ * look: content sits on white panels over the grey body, and the container is
+ * widened from the vendor default of 1200px to 1500px.
+ * ------------------------------------------------------------------------- */
+
+.gh-topic {
+    padding: 40px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+}
+
+.gh-article {
+    margin: auto;
+    max-width: var(--container-width, 1500px);
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+}
+
+.gh-inner {
+    max-width: var(--container-width, 1500px);
+}
+
+.gh-content {
+    grid-template-columns: [full-start] minmax(var(--gap), auto) [wide-start] minmax(auto, calc((var(--container-width, 1200px) - var(--content-width, 100px))/2)) [main-start] min(var(--content-width, 1200px), calc(100% - var(--gap)*2)) [main-end] minmax(auto, calc((var(--container-width, 1200px) - var(--content-width, 720px))/2)) [wide-end] minmax(var(--gap), auto) [full-end];
+}
+
+.gh-read-next {
+    grid-template-columns: [full-start] minmax(var(--gap), auto) [wide-start] minmax(auto, calc((var(--container-width, 1200px) - var(--content-width, 100px))/2)) [main-start] min(var(--content-width, 1500px), calc(100% - var(--gap)*2)) [main-end] minmax(auto, calc((var(--container-width, 1200px) - var(--content-width, 720px))/2)) [wide-end] minmax(var(--gap), auto) [full-end];
+}
+
+/* Design layer last: it settles the look over both the vendor sheet and
+ * the theme's older rules above. */
+@import "theme.css";

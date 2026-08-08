@@ -44,22 +44,36 @@
         "custom": {
             "navigation_layout": {
                 "type": "select",
-                "options": ["Logo on the left", "Logo in the middle", "Stacked"],
-                "default": "Stacked"
+                "options": [
+                    "Logo on the left",
+                    "Logo in the middle",
+                    "Stacked"
+                ],
+                "default": "Logo on the left"
             },
             "header_style": {
                 "type": "select",
-                "options": ["Light", "Accent color", "Dark"],
+                "options": [
+                    "Light",
+                    "Accent color",
+                    "Dark"
+                ],
                 "default": "Light"
             },
             "title_font": {
                 "type": "select",
-                "options": ["Modern sans-serif", "Elegant serif"],
-                "default": "Modern sans-serif"
+                "options": [
+                    "Modern sans-serif",
+                    "Elegant serif"
+                ],
+                "default": "Elegant serif"
             },
             "body_font": {
                 "type": "select",
-                "options": ["Modern sans-serif", "Elegant serif"],
+                "options": [
+                    "Modern sans-serif",
+                    "Elegant serif"
+                ],
                 "default": "Elegant serif"
             },
             "white_publication_logo_for_transparent_header": {
@@ -85,7 +99,8 @@
     "scripts": {
         "dev": "gulp",
         "test": "gscan .",
-        "zip": "gulp zip"
+        "zip": "gulp zip",
+        "test:js": "node --test test/"
     },
     "devDependencies": {
         "@tryghost/shared-theme-assets": "2.1.1",
@@ -99,6 +114,7 @@
         "gulp-postcss": "9.0.1",
         "gulp-uglify": "3.0.2",
         "gulp-zip": "5.1.0",
+        "jsdom": "^29.1.1",
         "postcss": "8.4.23",
         "postcss-easy-import": "4.0.0",
         "pump": "3.0.0"

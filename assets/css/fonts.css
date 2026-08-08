@@ -1,69 +1,49 @@
+/* Self-hosted variable fonts with full Serbian Cyrillic.
+ *
+ * Subset from the upstream binaries in the google/fonts repository, NOT from
+ * the Google Fonts CSS API — the API's served files strip the cyrl/SRB
+ * language system, which is what drives the Serbian localized italic forms
+ * of б г д п т. Subset range is latin + latin-ext + cyrillic; latin-ext is
+ * required, it carries đ ž ć č š for the Latin script view.
+ *
+ * Four variable faces (294 KB total) replace the twenty static Latin-only
+ * files this theme used to ship, under which every Cyrillic glyph on the
+ * site fell back to a system font.
+ *
+ * To regenerate:
+ *   pyftsubset Lora[wght].ttf --output-file=Lora.woff2 --flavor=woff2 \
+ *     --unicodes=<latin,latin-ext,cyrillic> \
+ *     --layout-features='ccmp,locl,mark,mkmk,kern,liga,clig,calt,rlig,rvrn,dnom,frac,numr,tnum,onum'
+ */
+
 @font-face {
-    font-family: Inter;
+    font-family: 'Lora';
     font-style: normal;
-    font-weight: 400;
-    src: local(""), url("../fonts/inter-v12-latin-regular.woff2") format("woff2"), url("../fonts/inter-v12-latin-regular.woff") format("woff");
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('../fonts/Lora.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 500;
-    src: local(""), url("../fonts/inter-v12-latin-500.woff2") format("woff2"), url("../fonts/inter-v12-latin-500.woff") format("woff");
-}
-
-@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
-    src: local(""), url("../fonts/inter-v12-latin-600.woff2") format("woff2"), url("../fonts/inter-v12-latin-600.woff") format("woff");
-}
-
-@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 700;
-    src: local(""), url("../fonts/inter-v12-latin-700.woff2") format("woff2"), url("../fonts/inter-v12-latin-700.woff") format("woff");
-}
-
-@font-face {
-    font-family: Lora;
-    font-style: normal;
-    font-weight: 400;
-    src: local(""), url("../fonts/lora-v25-latin-regular.woff2") format("woff2"), url("../fonts/lora-v25-latin-regular.woff") format("woff");
-}
-
-@font-face {
-    font-family: Lora;
-    font-style: normal;
-    font-weight: 500;
-    src: local(""), url("../fonts/lora-v25-latin-500.woff2") format("woff2"), url("../fonts/lora-v25-latin-500.woff") format("woff");
-}
-
-@font-face {
-    font-family: Lora;
-    font-style: normal;
-    font-weight: 600;
-    src: local(""), url("../fonts/lora-v25-latin-600.woff2") format("woff2"), url("../fonts/lora-v25-latin-600.woff") format("woff");
-}
-
-@font-face {
-    font-family: Lora;
-    font-style: normal;
-    font-weight: 700;
-    src: local(""), url("../fonts/lora-v25-latin-700.woff2") format("woff2"), url("../fonts/lora-v25-latin-700.woff") format("woff");
-}
-
-@font-face {
-    font-family: Lora;
+    font-family: 'Lora';
     font-style: italic;
-    font-weight: 400;
-    src: local(""), url("../fonts/lora-v25-latin-italic.woff2") format("woff2"), url("../fonts/lora-v25-latin-italic.woff") format("woff");
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('../fonts/Lora-Italic.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: Lora;
+    font-family: 'Source Sans 3';
+    font-style: normal;
+    font-weight: 200 900;
+    font-display: swap;
+    src: url('../fonts/SourceSans3.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
     font-style: italic;
-    font-weight: 700;
-    src: local(""), url("../fonts/lora-v25-latin-700italic.woff2") format("woff2"), url("../fonts/lora-v25-latin-700italic.woff") format("woff");
+    font-weight: 200 900;
+    font-display: swap;
+    src: url('../fonts/SourceSans3-Italic.woff2') format('woff2');
 }

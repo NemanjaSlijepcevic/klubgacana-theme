@@ -1,0 +1,206 @@
+/* ===========================================================================
+ * DESIGN LAYER — heritage editorial
+ *
+ * The organising device is the incised line, taken from the relief carving on
+ * the stećci around Gacko: content is divided by rules, not boxed in cards
+ * that float on shadows. Serif (Lora) carries the reading and the display;
+ * sans (Source Sans 3) carries navigation, metadata and data.
+ *
+ * Imported last so it settles the design over both the vendor sheet and the
+ * theme's older rules.
+ * ======================================================================== */
+
+/* --- typography ------------------------------------------------------- */
+
+body {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    line-height: 1.7;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.gh-article-title,
+.gh-card-title,
+.gh-cover-title,
+.gh-pagehead-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+}
+
+/* Navigation, metadata, buttons and anything tabular stay in the sans —
+ * Serbian set in a serif at small sizes loses too much at UI scale. */
+.gh-head,
+.gh-foot,
+.gh-card-footer,
+.gh-article-meta,
+.gh-article-tag,
+.gh-topic-name,
+.gh-topic-link,
+.gh-pagination,
+.gh-btn,
+.kg-prefs,
+.nav {
+    font-family: var(--font-sans);
+}
+
+/* --- eyebrows: small, spaced, uppercase ------------------------------- */
+
+.gh-article-tag,
+.gh-topic-grid .gh-topic-name,
+.gh-topic-header .gh-topic-name {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.gh-article-tag {
+    color: var(--ember);
+}
+
+.gh-card-footer {
+    letter-spacing: 0.1em;
+}
+
+/* --- header: a carved edge, not a shadowed bar ------------------------ */
+
+.gh-head {
+    background-color: var(--stone);
+}
+
+body:not(.is-head-stacked) .gh-head-inner {
+    border-bottom: 1px solid var(--rule);
+}
+
+.gh-head-logo,
+.gh-head-logo a {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* --- plates ------------------------------------------------------------ */
+
+.gh-topic,
+.gh-article {
+    border: 1px solid var(--rule);
+    border-radius: 0;
+}
+
+/* --- article ----------------------------------------------------------- */
+
+.gh-article-header {
+    text-align: center;
+}
+
+.gh-article-title {
+    font-size: clamp(3.2rem, 5vw, 5.2rem);
+    letter-spacing: -0.022em;
+}
+
+.gh-article-excerpt {
+    max-width: 34em;
+    margin-inline: auto;
+    font-size: 1.9rem;
+    color: var(--ink-muted);
+}
+
+.gh-article-meta {
+    font-size: 1.4rem;
+    color: var(--ink-muted);
+}
+
+/* An opening initial in the heraldic red, the one flourish on the page. */
+.gh-content > p:first-of-type::first-letter {
+    float: left;
+    padding: 0.06em 0.1em 0 0;
+    font-size: 4.1em;
+    font-weight: 600;
+    line-height: 0.82;
+    color: var(--ember);
+}
+
+.gh-content blockquote {
+    padding-left: 1.4rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    border-left: 2px solid var(--ember);
+}
+
+.gh-content a {
+    color: var(--accent);
+    text-underline-offset: 0.18em;
+}
+
+.gh-content h2,
+.gh-content h3 {
+    margin-top: 2em;
+}
+
+/* --- section heads: a rule under every topic -------------------------- */
+
+.gh-topic-header,
+.gh-topic-grid .gh-topic-name {
+    border-bottom: 1px solid var(--rule-strong);
+}
+
+.gh-topic-grid .gh-topic-name {
+    padding-bottom: 0.6rem;
+    margin-bottom: 2.4rem;
+}
+
+.gh-topic-footer {
+    border-top: 1px solid var(--rule);
+}
+
+.gh-topic-link {
+    color: var(--accent);
+}
+
+/* --- pagination -------------------------------------------------------- */
+
+.gh-pagination,
+.gh-loadmore {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* --- focus ------------------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* --- motion ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --- Serbian localized forms -------------------------------------------
+ * lang="sr-Cyrl" on <html> is what lets the browser apply the fonts' locl
+ * feature to italic б г д п т. This makes the intent explicit and keeps it
+ * working inside content where an editor has nested a lang attribute. */
+
+:lang(sr-Cyrl),
+:lang(sr) {
+    font-feature-settings: "kern" 1, "liga" 1, "locl" 1;
+}
