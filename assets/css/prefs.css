@@ -3,10 +3,36 @@
  * Both are plain buttons carrying data-kg-*-toggle; assets/js/site.js binds
  * them by delegation, so the same markup works in the Django apps. */
 
+/* The four colours below are the whole theming surface of these controls.
+ * Over a photograph or a dark bar the header inverts, and one override block
+ * (further down) re-points all four rather than duplicating every rule. */
 .kg-prefs {
+    --kg-btn-ink: var(--ink);
+    --kg-btn-line: var(--rule-strong);
+    --kg-btn-active: var(--accent);
+    --kg-btn-dim: var(--ink-faint);
+    --kg-btn-wash: transparent;
+
     display: flex;
     gap: 6px;
     align-items: center;
+}
+
+/* Sit at the end of the navigation row. The toggles are deliberately not in
+ * .gh-head-actions: in the Stacked layout that element spans the brand's own
+ * grid row, so anything added to it redistributes that row and shifts the
+ * search icon onto the site title. */
+.gh-head-menu .kg-prefs {
+    margin-left: auto;
+}
+
+/* The mobile menu is a vertical stack, where margin-left:auto would strand the
+ * toggles against the right edge, away from the links they belong with. */
+@media (max-width: 767px) {
+    .gh-head-menu .kg-prefs {
+        margin: 12px 0 0;
+        justify-content: center;
+    }
 }
 
 .kg-prefs-btn {
@@ -20,40 +46,40 @@
     font-size: 1.2rem;
     font-weight: 600;
     line-height: 1;
-    color: inherit;
+    color: var(--kg-btn-ink);
     cursor: pointer;
-    background: transparent;
-    border: 1px solid var(--rule-strong);
+    background: var(--kg-btn-wash);
+    border: 1px solid var(--kg-btn-line);
     border-radius: 2px;
-    transition: color 0.15s, border-color 0.15s;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
 }
 
 .kg-prefs-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    color: var(--kg-btn-active);
+    border-color: var(--kg-btn-active);
 }
 
 .kg-prefs-btn:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--kg-btn-active);
     outline-offset: 2px;
 }
 
 /* Which half of Ћир/Lat is lit tracks the current setting. */
 .kg-script-cyr {
-    color: var(--accent);
+    color: var(--kg-btn-active);
 }
 
 .kg-script-lat,
 .kg-script-sep {
-    color: var(--ink-faint);
+    color: var(--kg-btn-dim);
 }
 
 :root[data-script="lat"] .kg-script-cyr {
-    color: var(--ink-faint);
+    color: var(--kg-btn-dim);
 }
 
 :root[data-script="lat"] .kg-script-lat {
-    color: var(--accent);
+    color: var(--kg-btn-active);
 }
 
 /* Show the icon for the mode the button switches TO. */
@@ -103,5 +129,46 @@
 
     .kg-prefs-btn {
         font-size: 1.3rem;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+ * Header variants: the bar sits on a photograph, the accent colour, or a dark
+ * slab. Everything switches to the fixed light pair, because these grounds are
+ * light-on-dark in BOTH themes.
+ *
+ * A translucent white wash, not --accent-soft: that token is a pale tint, and
+ * over an image it reads as a white block with the (still white) label
+ * invisible inside it.
+ * ------------------------------------------------------------------------ */
+
+.is-head-transparent .kg-prefs,
+.is-head-dark:not(.is-head-transparent) .kg-prefs,
+.is-head-brand:not(.is-head-transparent) .kg-prefs {
+    --kg-btn-ink: var(--on-dark);
+    --kg-btn-line: rgba(255, 255, 255, 0.55);
+    --kg-btn-active: var(--on-dark);
+    --kg-btn-dim: rgba(255, 255, 255, 0.62);
+    --kg-btn-wash: rgba(0, 0, 0, 0.22);
+}
+
+.is-head-transparent .kg-prefs-btn:hover,
+.is-head-dark:not(.is-head-transparent) .kg-prefs-btn:hover,
+.is-head-brand:not(.is-head-transparent) .kg-prefs-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--on-dark);
+}
+
+/* The mobile menu is a light panel of its own, off the image, so the controls
+ * inside it go back to the page's ink. */
+@media (max-width: 767px) {
+    .is-head-transparent .gh-head-menu .kg-prefs,
+    .is-head-dark .gh-head-menu .kg-prefs,
+    .is-head-brand .gh-head-menu .kg-prefs {
+        --kg-btn-ink: var(--ink);
+        --kg-btn-line: var(--rule-strong);
+        --kg-btn-active: var(--accent);
+        --kg-btn-dim: var(--ink-faint);
+        --kg-btn-wash: transparent;
     }
 }
