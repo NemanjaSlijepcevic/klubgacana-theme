@@ -1,0 +1,195 @@
+<div class="carousel">
+	<div class="carousel-track">
+		<div class="slide">
+			<img srcset="/content/images/size/w300/2026/03/gat-p-1.jpg 300w,
+																	/content/images/size/w720/2026/03/gat-p-1.jpg 720w,
+																	/content/images/size/w960/2026/03/gat-p-1.jpg 960w,
+																	/content/images/size/w1200/2026/03/gat-p-1.jpg 1200w,
+																	/content/images/size/w2000/2026/03/gat-p-1.jpg 2000w" sizes="100vw"
+				src="/content/images/size/w1200/2026/03/gat-p-1.jpg" alt="">
+			<div class="carousel-caption">Из слободарског Гацка потекли...</div>
+		</div>
+		<div class="slide">
+			<img srcset="/content/images/size/w300/2026/03/gat-p-2.jpg 300w,
+																	/content/images/size/w720/2026/03/gat-p-2.jpg 720w,
+																	/content/images/size/w960/2026/03/gat-p-2.jpg 960w,
+																	/content/images/size/w1200/2026/03/gat-p-2.jpg 1200w,
+																	/content/images/size/w2000/2026/03/gat-p-2.jpg 2000w" sizes="100vw"
+				src="/content/images/size/w1200/2026/03/gat-p-2.jpg" alt="">
+			<div class="carousel-caption">Ка светосавској Херцеговини загледани...</div>
+		</div>
+		<div class="slide">
+			<img srcset="/content/images/size/w300/2026/03/gat-p-3.jpg 300w,
+																	/content/images/size/w720/2026/03/gat-p-3.jpg 720w,
+																	/content/images/size/w960/2026/03/gat-p-3.jpg 960w,
+																	/content/images/size/w1200/2026/03/gat-p-3.jpg 1200w,
+																	/content/images/size/w2000/2026/03/gat-p-3.jpg 2000w" sizes="100vw"
+				src="/content/images/size/w1200/2026/03/gat-p-3.jpg" alt="">
+			<div class="carousel-caption">Републици Српској заветовани...</div>
+		</div>
+	</div>
+	<button class="carousel-btn prev">&#10094;</button>
+	<button class="carousel-btn next">&#10095;</button>
+	<div class="carousel-dots">
+		<span class="dot active" data-slide="0"></span>
+		<span class="dot" data-slide="1"></span>
+		<span class="dot" data-slide="2"></span>
+	</div>
+</div>
+
+<style>
+	.carousel-track {
+		display: flex;
+		transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+		height: 100%;
+		will-change: transform;
+	}
+
+	.slide {
+		min-width: 100%;
+		height: 100%;
+		position: relative;
+		display: block;
+		transition: opacity 0.5s ease;
+	}
+
+	.carousel {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		border-radius: 5px;
+		margin-bottom: 5em;
+		box-shadow: 0 50px 100px -20px rgb(50 50 93 / 8%),
+			0 30px 60px -30px rgb(0 0 0 / 13%),
+			0 10px 20px -10px rgb(0 0 0 / 8%);
+	}
+
+	.carousel-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(0, 0, 0, 0.5);
+		color: #fff;
+		border: none;
+		font-size: 2rem;
+		padding: 0.5em 0.8em;
+		cursor: pointer;
+		border-radius: 50%;
+		z-index: 2;
+	}
+
+	.carousel-btn.prev {
+		left: 10px;
+	}
+
+	.carousel-btn.next {
+		right: 10px;
+	}
+
+	.carousel-dots {
+		position: absolute;
+		bottom: 16px;
+		right: 16px;
+		display: flex;
+		gap: 8px;
+		z-index: 2;
+	}
+
+	.carousel-caption {
+		position: absolute;
+		left: 40%;
+		top: 65%;
+		transform: translate(-50%, -50%);
+		color: #fff;
+		font-size: clamp(1rem, 5vw, 7rem);
+		font-weight: bold;
+		text-align: left;
+		background: none;
+		/*rgba(0, 0, 0, 0.4);*/
+		padding: 0 1em;
+		border-radius: 8px;
+		z-index: 2;
+		pointer-events: none;
+		box-shadow: none;
+		/*0 2px 8px rgba(0, 0, 0, 0.3);*/
+		line-height: 1.2;
+	}
+
+	.slide {
+		position: relative;
+	}
+
+	.dot {
+		width: 15px;
+		height: 15px;
+		background: rgba(255, 255, 255, 0.7);
+		border-radius: 50%;
+		cursor: pointer;
+		border: 2px solid #fff;
+		transition: background 0.3s;
+	}
+
+	.dot.active {
+		background: #170b75;
+	}
+</style>
+
+<script>
+	let currentSlide = 0;
+	const track = document.querySelector('.carousel-track');
+	const slides = document.querySelectorAll('.slide');
+	const dots = document.querySelectorAll('.dot');
+	const prevBtn = document.querySelector('.carousel-btn.prev');
+	const nextBtn = document.querySelector('.carousel-btn.next');
+	let autoSlideInterval;
+
+	function updateCarousel() {
+		track.style.transform = `translateX(-${currentSlide * 100}%)`;
+		dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+	}
+
+	function nextSlide() {
+		currentSlide = (currentSlide + 1) % slides.length;
+		updateCarousel();
+	}
+
+	function prevSlide() {
+		currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+		updateCarousel();
+	}
+
+	function goToSlide(index) {
+		currentSlide = index;
+		updateCarousel();
+	}
+
+	function startAutoSlide() {
+		autoSlideInterval = setInterval(nextSlide, 5000);
+	}
+
+	function stopAutoSlide() {
+		clearInterval(autoSlideInterval);
+	}
+
+	prevBtn.addEventListener('click', () => {
+		prevSlide();
+		stopAutoSlide();
+		startAutoSlide();
+	});
+	nextBtn.addEventListener('click', () => {
+		nextSlide();
+		stopAutoSlide();
+		startAutoSlide();
+	});
+	dots.forEach((dot, i) => {
+		dot.addEventListener('click', () => {
+			goToSlide(i);
+			stopAutoSlide();
+			startAutoSlide();
+		});
+	});
+
+	updateCarousel();
+	startAutoSlide();
+</script>
